@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Welcome
+{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/ssearch.css'%}">
+
+<style>
+.remall{
+    padding-left: 80%;
+}
+@media screen and  (max-device-width: 768px) {
+
+
+.overall{
+    margin:0;
+    margin-top: 5%;
+}
+.form-group{
+    margin:0;
+}
+.table-responsive{
+    margin:0;
+    width: 100%;
+}
+#ss{
+    margin: 0;
+    
+}
+.remall{
+    padding-left: 15%;
+}
+.form-control{
+    font-size: 100%;
+    
+}
+#ab,#bc,#cd {
+   height:30px;
+}
+input::placeholder {
+          font-size: 90%;
+}
+.fa-trash-alt, .fa-edit{
+    font-size: 100%;
+}
+    
+ 
+.te {
+        width:95%;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 100%;
+    }
+    .btn {
+        
+        font-size:90%;
+        line-height: 1.5;
+        padding:5% 6%;
+      }
+
+      #fnaw{
+          font-size: 80%;
+      }
+}
+
+
+</style>
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="position: fixed; width: 100%;">
+    <a class="navbar-brand mb-0 h1" href="{% url 'twolink' %}">{{shop}}</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'twolink' %}"> Home<span class="sr-only">(current)</span></a>
+          </li>
+              <li class="nav-item active">
+              <a class="nav-link" href="#"><span class="sr-only">(current)</span></a>
+            </li>
+
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <a href="{% url 'login' %}"  class="btn btn-dark my-2 my-sm-0"  type="submit">  Logout</a>
+          
+        </form>
+      </div>
+    </nav>
+
+
+
+
+
+
+
+
+
+
+
+<br><br> <br>
+
+
+
+
+
+
+   
+   
+ <div class="overall">
+    
+<form action="" method="POST">
+    {% csrf_token %}
+
+    
+        <div class="container" class="form-group">
+            
+        <table>
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" style="width: 60%;">
+                <strong>Message: </strong>{{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            
+            {% endfor %}
+            <thead>
+                <tr>
+                    <th>
+                        <label for="ab">Item_ID </label>
+                        <input type="text" id= "ab" class="form-control" pattern="\d*" maxlength="4"  name="id"  placeholder='1-9999 digits' required>
+                    </th> 
+                    <th style="justify-content: center;">
+                        <label for="bc">Item name</label>
+                        <input type="text" name="name" class="form-control" id="bc" placeholder="Item Name..." required>
+
+                    </th>
+                    <th style="padding-right:15%;">
+                        <label for="cd">Price</label>
+                        <input type="number" class="form-control" step=1 name="price" id='cd' placeholder="Price" required>
+                    </th>
+
+                </tr>
+                
+                
+            </thead>
+
+
+        </table>
+        <br>
+        <table class="s">
+            <thead>
+                <tr>
+                    <th>
+                        <button type="submit" class="btn btn-success" >
+                           Add Item
+                        </button>
+       
+                    </th>
+                    <th class='remall'><a href="{% url 'deleteall' %}" class="btn btn-danger" id='df'>  <i class="fas fa-times"></i> &nbsp; RemoveAll</a></th>
+                </tr>
+            </thead>
+        </table>
+    <br>
+
+
+</div>
+
+
+
+
+
+                
+            
+</form>
+
+
+
+
+
+
+
+
+
+<div class='te'>
+
+
+   
+
+<div class="container">
+<div  style="width: 55%;">
+        <table class="table" id='t'>
+    <thead> <tr>
+    <th>Item ID</th>
+    <th>Item Name</th>
+    <th>Price</th>
+    <th>Delete</th>
+    <th>Edit</th>
+</tr>
+</thead> 
+<tbody>
+    {% for item in items %}
+    <tr>
+        <td>{{ item.Product_Id}}</td>
+        <td>{{ item.Product_name}}</td>
+        <td>{{ item.Price}}</td>
+        <td><a href="{% url 'deleteitem' item.id %} " class="button-3"> <p id='fnaw'> <i class="fas fa-trash-alt"></i> </p></a></td>
+        <td><a href="{% url 'modify' item.Product_Id %} " class="button-0"> <p id='fnaw'> <i class="far fa-edit"></i></p> </a></td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+</div></div>
+</div>
+</div>
+{% endblock%}
